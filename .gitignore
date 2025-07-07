@@ -1,0 +1,53 @@
+# # Ignorer les fichiers volumineux
+# *.zip
+# *.tar
+# *.tar.gz
+# *.rar
+# *.7z
+# *.iso
+# *.dmg
+
+# # Fichiers binaires et objets compilés
+# *.exe
+# *.dll
+# *.so
+# *.o
+# *.a
+# *.class
+# *.pyc
+# *.pyo
+# __pycache__/
+
+# # Fichiers de données volumineux
+# *.csv
+# *.tsv
+# *.parquet
+# *.hdf5
+# *.db
+# *.sqlite
+# *.log
+# *.npy
+# *.npz
+# *.sav
+# *.rds
+# *.mat
+
+# Dossiers de données
+# /data/
+# datasets/
+# tmp/
+# output/
+# results/
+
+# Fichiers Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environnements virtuels
+.venv/
+env/
+venv/
+venv-logement/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
