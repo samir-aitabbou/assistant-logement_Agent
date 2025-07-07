@@ -108,7 +108,7 @@ Sinon, crée-les à partir de tes propres documents avec FAISS + `SentenceTransf
 ## ▶️ Lancement de l’app
 
 ```bash
-streamlit run app_0.py
+streamlit run app.py
 ```
 
 Puis ouvre [http://localhost:8501](http://localhost:8501) dans ton navigateur.
