@@ -149,7 +149,3 @@ Puis ouvre [http://localhost:8501](http://localhost:8501) dans ton navigateur.
 - [ ] Option d’export des réponses
 
 ---
-
-## 📄 License
-
-Projet interne pour le SCASC – usage professionnel uniquement.
