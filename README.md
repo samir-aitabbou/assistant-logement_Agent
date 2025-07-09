@@ -40,6 +40,12 @@ assistant-logement/
 - 🔌 Mode GPU/CPU détecté automatiquement
 
 ---
+## 🎥 Aperçu de l'application
+
+<p align="center">
+  <img src="./docs/assistant_logement.gif" alt="Démo de l'application" />
+</p>
+
 
 ## ⚙️ Prérequis
 

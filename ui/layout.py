@@ -5,11 +5,11 @@ import streamlit as st
 
 def setup_page_style():
     # Configuration de la page
-    st.set_page_config(
-        page_title='Assistant Logement SCASC',
-        page_icon='🏠',
-        layout='centered'
-    )
+    # st.set_page_config(
+    #     page_title='Assistant Logement SCASC',
+    #     page_icon='🏠',
+    #     layout='centered'
+    # )
 
     # Style personnalisé en HTML/CSS
     custom_css = """

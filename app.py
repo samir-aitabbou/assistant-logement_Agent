@@ -1,4 +1,12 @@
 import streamlit as st
+
+
+st.set_page_config(
+    page_title='Assistant Logement SCASC',
+    page_icon='🏠',
+    layout='centered'
+)
+
 from ui.layout import setup_page_style
 from services.rag import rag_repond
 from config.constants import MODEL_OPTIONS
