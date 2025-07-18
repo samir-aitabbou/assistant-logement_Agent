@@ -10,17 +10,23 @@ else
 fi
 
 echo "🚀 Lancement du service Ollama en arrière-plan..."
-pkill ollama 2> /dev/null  # On tue l'ancien processus s'il existe
+pkill ollama 2> /dev/null
 ollama serve &
 
 sleep 3
 
-# Modèles à préparer
-MODELS=("mistral" "nous-hermes2" "tinyllama")
+# Liste des modèles à tirer
+declare -A MODEL_MAP=(
+    # ["Mistral-7B"]="mistral"
+    ["Gemma-2B"]="gemma:2b"
+    # ["TinyLlama"]="tinyllama"
+    # ["LLaMA3-8B"]="llama3:8b"
+)
 
-for MODEL in "${MODELS[@]}"; do
-    echo "📥 Téléchargement du modèle : $MODEL"
-    ollama pull $MODEL
+for model_key in "${!MODEL_MAP[@]}"; do
+    MODEL="${MODEL_MAP[$model_key]}"
+    echo "📥 Téléchargement du modèle : $model_key -> $MODEL"
+    ollama pull "$MODEL"
 done
 
 echo "✅ Installation terminée. Ollama est prêt avec tous les modèles."

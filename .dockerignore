@@ -44,3 +44,4 @@ node_modules/
 outputs/
 data/*.pdf
 data/*.docx
+*.gif

@@ -16,10 +16,13 @@ COPY . .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Rendre les scripts exécutables
-RUN chmod +x install_ollama.sh run.sh
-
-# Exposer le port de Streamlit (optionnel)
-EXPOSE 8080
+RUN chmod +x scripts/*.sh
+ 
+# Exposer les ports
+ # Streamlit
+EXPOSE 8501 
+# Ollama
+EXPOSE 11434  
 
 # Commande par défaut : lance le script complet
-CMD ["./run.sh"]
+CMD ["scripts/run.sh"]

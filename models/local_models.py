@@ -8,11 +8,17 @@ import time
 from utils.device import detect_device
 import json
 
-MODEL_MAP = {
-    'Mistral-7B': 'mistral',
-    'Gemma2-2B': 'gemma2:2b'
-}
 
+# MODEL_MAP = {
+#     'Mistral-7B': 'mistral',
+#     'Gemma-2B': 'gemma:2b',
+#     'TinyLlama': 'tinyllama',
+#     'LLaMA3-8B': 'llama3:8b'
+# }
+
+MODEL_MAP = {
+    'Gemma-2B': 'gemma:2b',
+}
 
 OLLAMA_API_URL = "http://localhost:11434"
 
