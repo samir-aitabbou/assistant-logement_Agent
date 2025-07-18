@@ -1,0 +1,46 @@
+# 🐍 Environnement virtuel Python
+.venv/
+venv/
+env/
+
+# 🔒 Secrets et variables d’environnement (tu utilises --env-file à la place)
+.env
+
+# 📚 Fichiers Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# 🗑 Fichiers temporaires / OS
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+*.DS_Store
+
+# 🧪 Cache / outils Python
+*.egg-info/
+.eggs/
+.cache/
+pytest_cache/
+build/
+dist/
+
+# ⚙️ Git et versioning
+.git/
+.gitignore
+
+# 📦 Ollama models (trop lourds à copier)
+~/.ollama/
+
+# 🔧 VSCode / IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# 🔄 Autres
+node_modules/
+outputs/
+data/*.pdf
+data/*.docx

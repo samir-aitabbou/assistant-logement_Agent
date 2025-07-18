@@ -1,6 +1,7 @@
+
 # 🏠 Assistant Logement SCASC
 
-> Un assistant intelligent qui répond aux questions liées aux aides au logement en utilisant des modèles de génération de texte (locaux ou via API) et la méthode RAG (Retrieval-Augmented Generation).
+> Un assistant intelligent qui répond aux questions liées aux aides au logement en utilisant des modèles de génération de texte (locaux via Ollama ou via API Gemini) et la méthode RAG (Retrieval-Augmented Generation).
 
 ---
 
@@ -9,12 +10,14 @@
 ```
 assistant-logement/
 │
-├── app_0.py                      # Script principal Streamlit
+├── app.py                      # Script principal Streamlit
+├── run.sh                      # Script de démarrage automatisé (Ollama + Streamlit)
+├── install_ollama.sh           # Script d'installation d'Ollama + modèles
 ├── config/
 │   └── constants.py             # Clé API et modèles disponibles
 ├── models/
 │   ├── api_models.py            # Chargement des modèles via API (Gemini)
-│   ├── local_models.py          # Chargement des modèles locaux (Hugging Face)
+│   ├── local_models.py          # Chargement des modèles locaux (via Ollama)
 │   └── embedder.py              # Embedder + FAISS loader
 ├── services/
 │   └── rag.py                   # Logique RAG principale
@@ -34,24 +37,28 @@ assistant-logement/
 ## 🚀 Fonctionnalités
 
 - 🔍 Récupération intelligente des documents pertinents via FAISS
-- 🧠 Génération de texte par modèle local (`Mistral`, `Nous Hermes`, etc.) ou API (`Gemini`)
+- 🧠 Génération de texte par modèle local (`Mistral`, `Nous Hermes`, etc.) via **Ollama**
+- 🌐 Génération par API (`Gemini`)
 - 💬 Interface simple via Streamlit
 - 📊 Affichage du score de similarité
 - 🔌 Mode GPU/CPU détecté automatiquement
 
 ---
+
 ## 🎥 Aperçu de l'application
 
 <p align="center">
   <img src="./docs/assistant_logement.gif" alt="Démo de l'application" />
 </p>
 
+---
+
 
 ## ⚙️ Prérequis
 
 - Python 3.9+
-- Environnement virtuel (recommandé)
-- GPU (optionnel mais recommandé pour les modèles locaux)
+- GPU (optionnel mais recommandé pour Ollama)
+- [Ollama](https://ollama.com) (installé automatiquement)
 
 ---
 
@@ -59,7 +66,7 @@ assistant-logement/
 
 ```bash
 # 1. Clone du repo
-git clone <url-du-repo>
+git clone https://gitlab.cedre.univ-amu.fr/samir.ait-abbou/assistant-logement.git
 cd assistant-logement
 
 # 2. Création de l'environnement virtuel
@@ -67,66 +74,102 @@ python3 -m venv .venv
 source .venv/bin/activate  # Linux/macOS
 # .venv\Scripts\activate   # Windows
 
-# 3. Installation des dépendances
+# 3. Installation des dépendances Python
 pip install --upgrade pip
 pip install -r requirements.txt
+
+# 4. Lancement automatique d'Ollama + modèles + Streamlit
+./run.sh
 ```
 
 ---
+
+### ⚠️ Note importante lors du premier lancement
+
+> Lors du premier lancement via le script `run.sh`, le système va installer **Ollama** s’il n’est pas déjà présent.
+
+🛠️ Cette installation utilise le script officiel `https://ollama.com/install.sh`, et :
+
+- 💡 **Le terminal peut vous demander de saisir votre mot de passe** (commande `sudo`) pour autoriser l'installation dans le système (`/usr/local`).
+- ✅ C'est une procédure normale et sécurisée.
+- 📌 **Aucune confirmation manuelle n'est demandée pour télécharger les modèles.**
+
+🔔 **Merci de bien surveiller le terminal pendant cette étape.**
+
+---
+
+---
+
+### 🪟 Utilisation sous WSL (Windows Subsystem for Linux)
+
+Si vous utilisez WSL (par exemple Ubuntu sous Windows), vous pourriez voir ce message lors de l’installation d’Ollama :
+
+Cela signifie que le service Ollama ne peut pas démarrer automatiquement via `systemd`.
+
+✅ Dans ce cas, lancez simplement le serveur Ollama manuellement :
+
+```bash
+ollama serve &
+```
+-----
+
+💡 Pour une solution permanente, vous pouvez activer systemd dans WSL : https://learn.microsoft.com/en-us/windows/wsl/systemd#how-to-enable-systemd
+
+
 
 ## 🔐 Configuration
 
 ### Clé API Gemini
 
-Dans `config/constants.py`, une clé d'API Gemini est déjà définie :
+Créer un fichier `.env` à la racine du projet (exemple dans `example.env`) :
 
-```python
-gemini_api_key = 'AIza...'
 ```
-
-> 🔒 Remplace-la avec ta propre clé si nécessaire.
+GEMINI_API_KEY=AIza...
+```
 
 ---
 
-## 🧠 Téléchargement des modèles locaux
+## 🧠 Téléchargement des modèles locaux via Ollama
 
-Les modèles suivants sont automatiquement téléchargés depuis Hugging Face :
+Les modèles suivants sont téléchargés **automatiquement** au premier lancement :
 
-- `mistralai/Mistral-7B-Instruct-v0.1`
-- `NousResearch/Nous-Hermes-2-Mistral-7B`
-- `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
+- `mistral` (Mistral-7B-Instruct)
+- `nous-hermes2` (Nous Hermes 2 - Mistral)
+- `tinyllama` (TinyLlama 1.1B)
 
-⚠️ Assure-toi d’avoir assez de RAM/VRAM (16–32 GB pour Mistral).
+✅ Aucune action manuelle requise  
+✅ Pas de compte Hugging Face  
+✅ Compatible CPU/GPU automatiquement
 
 ---
 
 ## 📁 Données RAG
 
-Ton dossier `data/` doit contenir :
+Le dossier `data/` doit contenir :
 
 - `faiss_index.index` : index vectoriel
-- `faiss_metadata.json` : contenu des documents utilisés pour générer la réponse
+- `faiss_metadata.json` : documents liés
 
-Sinon, crée-les à partir de tes propres documents avec FAISS + `SentenceTransformer`.
+Si ces fichiers n'existent pas, tu peux les générer avec FAISS + SentenceTransformer sur tes documents.
 
 ---
 
-## ▶️ Lancement de l’app
+## ▶️ Lancement de l’app (manuel)
 
 ```bash
-streamlit run app.py
+# Si tu veux lancer manuellement
+./install_ollama.sh      # Installe Ollama + les modèles
+streamlit run app.py     # Lance l'app
 ```
-
-Puis ouvre [http://localhost:8501](http://localhost:8501) dans ton navigateur.
 
 ---
 
 ## 🧪 Exemple d'utilisation
 
 1. Choisir `local` ou `api`
-2. Choisir le modèle (`Mistral`, `Gemini`, etc.)
-3. Taper une question du type :  
-   > "Puis-je bénéficier d'aide au logement ?'"
+2. Choisir le modèle (`Mistral`, `Nous Hermes`, `Gemini`, etc.)
+3. Taper une question comme :  
+   > "Puis-je bénéficier d'aide au logement ?"
 4. Obtenir une réponse issue de documents officiels
 
 ---
@@ -134,18 +177,9 @@ Puis ouvre [http://localhost:8501](http://localhost:8501) dans ton navigateur.
 ## 🛠️ Dépendances principales
 
 - `streamlit`
-- `transformers`
-- `torch`
-- `faiss-cpu`
+- `requests`
 - `sentence-transformers`
+- `faiss-cpu`
 - `google-generativeai`
-
----
-
-## ✅ À faire / Suggestions
-
-- [ ] Ajouter une interface d’upload de documents personnalisés
-- [ ] Visualiser les documents utilisés dans la réponse
-- [ ] Option d’export des réponses
 
 ---

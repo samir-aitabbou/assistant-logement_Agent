@@ -1,9 +1,6 @@
 streamlit
-torch
-torchvision
-torchaudio
 sentence-transformers
-transformers
-accelerate
 faiss-cpu
-bitsandbytes
+requests
+google-generativeai
+python-dotenv

@@ -1,6 +1,5 @@
-# Visit https://www.lddgo.net/en/string/pyc-compile-decompile for more information
-# Version : Python 3.9
-
+# models/embedder.py
+# This module provides functionality to load an embedder and a FAISS index for document retrieval.
 import faiss
 import json
 import streamlit as st
