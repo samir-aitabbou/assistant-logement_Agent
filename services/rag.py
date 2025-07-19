@@ -8,7 +8,7 @@ embedder = get_embedder()
 index, metadata = load_faiss()
 
 
-def rag_repond(question: str, moteur: str = 'local', modele: str = 'Mistral-7B', top_k: int = 3, seuil_similarite: float = 0.5) -> str:
+def rag_repond(question: str, moteur: str = 'local', modele: str = 'Gemma-2B', top_k: int = 3, seuil_similarite: float = 0.5) -> str:
     question_contextualisee = f'Question sur l’aide au logement : {question}'
 
     query_vec = embedder.encode([question_contextualisee]).astype('float32')

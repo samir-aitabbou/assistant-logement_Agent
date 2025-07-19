@@ -61,7 +61,7 @@ def load_local_model(model_choice: str):
     ensure_ollama_installed()
     ensure_ollama_running()
 
-    model_name = MODEL_MAP.get(model_choice, MODEL_MAP['Mistral-7B'])
+    model_name = MODEL_MAP.get(model_choice, MODEL_MAP['Gemma-2B'])
     pull_model(model_name)
 
     # Affichage de l'état du device
@@ -82,16 +82,6 @@ def load_local_model(model_choice: str):
             "<div style='color:red'><b>⚠️ Aucun GPU détecté. Ollama utilisera le CPU.</b></div>",
             unsafe_allow_html=True
         )
-
-    # def generate_text(prompt: str, model=model_name) -> str:
-    #     try:
-    #         response = requests.post(
-    #             f"{OLLAMA_API_URL}/api/generate",
-    #             json={"model": model, "prompt": prompt}
-    #         )
-    #         return response.json().get("response", "").strip()
-    #     except Exception as e:
-    #         return f"Erreur lors de la génération : {e}"
 
     def generate_text(prompt: str, model=model_name) -> str:
         try:

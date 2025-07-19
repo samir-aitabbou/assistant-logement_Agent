@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  assistant-logement:
+    build: .
+    container_name: assistant-logement-container
+    ports:
+      - "8501:8501"     # Port Streamlit
+      - "11434:11434"   # Port Ollama
+    volumes:
+      - ./:/app         # Montage du code local (hot reload)
+    command: ["scripts/run.sh"]
